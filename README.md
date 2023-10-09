@@ -18,9 +18,15 @@ The eventual goal of this topic is to use the model to:
 All citations used for this project will go here.
 
 ### Training & Data Files Used
-Training Data File:
-https://raw.githubusercontent.com/ajayshewale/Sentiment-Analysis-of-Text-Data-Tweets-/master/data/train.csv
-Testing Data File:
-https://raw.githubusercontent.com/ajayshewale/Sentiment-Analysis-of-Text-Data-Tweets-/master/data/test.csv
-Mapping of Emojis to Sentiment:
-https://raw.githubusercontent.com/ajayshewale/Sentiment-Analysis-of-Text-Data-Tweets-/master/data/emoticons.txt
+
+**Original Training Dataset**
+
+Link: https://raw.githubusercontent.com/ajayshewale/Sentiment-Analysis-of-Text-Data-Tweets-/master/data/train.csv
+
+**Original Testing Dataset**
+
+Link: https://raw.githubusercontent.com/ajayshewale/Sentiment-Analysis-of-Text-Data-Tweets-/master/data/test.csv
+
+**Emoticons to Emotions Dataset**
+
+Link: https://raw.githubusercontent.com/ajayshewale/Sentiment-Analysis-of-Text-Data-Tweets-/master/data/emoticons.txt
