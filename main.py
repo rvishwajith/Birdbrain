@@ -12,33 +12,44 @@ print(torch.rand(3, 3))
 print("PyTorch is confirmed to be running.")
 """
 
-# trainingPath: Path to file containing tweets which are used to train the PyTorch analysis model.
-trainingPath = "Data/training-tweets.csv"
-# testingPath: Path to file containing tweets that analysis will be performed on.
-testingPath = "Data/testing-tweets.csv"
-# device: Hardware used to train the model. NVIDIA / CUDA GPU training is faster, but the testing
-# hardware being used is an ARM Mac, so a CPU will be used.
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
+# DATA PARSING & PREPROCESSING
 # Read in the data sets, and Remove unnecessary information:
-# 1. ID is not needed, so drop that column.
-# 2. Remove Any null valyes.
-# 3. In the model, category doesn't exist, rename it so it matches.
+#   1. ID is not needed, so drop that column.
+#   2. Remove Any null valyes.
+#   3. In the model, category doesn't exist, rename it so it matches.
+
+# trainingPath: Path to file containing tweets which are used to train the
+#   PyTorch analysis model.
+# testingPath: Path to file containing tweets that will be analyzed.
+trainingPath, testingPath = "data/training-tweets.csv", "data/testing-tweets.csv"
+
+# trainingData: Memory-mapped version of the training tweet data, which is
+#   preprocessed before being used to train the model.
+# testingData: The Tweet dataset which will be analyzed using the model after
+#   it has been trained.
 trainingData = (
     pandas.read_csv(trainingPath)
     .drop(columns="Id")
     .rename(columns={"Category": "Tweet"})
 )
-trainingData = trainingData[trainingData["Tweet"] != "Not Available"]
-# Why doesn't this work if appended after .rename(...)?
-trainingData = trainingData.dropna()
-# print("Printing training data:", trainingData)
 testingData = (
     pandas.read_csv(testingPath)
     .drop(columns="Id")
     .rename(columns={"Category": "Tweet"})
     .dropna()
 )
-testingData = testingData[testingData["Tweet"] != "Not Available"]
-testingData = testingData.dropna()
+
+# TODO: Add a preprocessing function for better reusability.
+
+trainingData, testingData = (
+    trainingData[trainingData["Tweet"] != "Not Available"],
+    testingData[testingData["Tweet"] != "Not Available"],
+)
+# ISSUE: Why doesn't this work if appended after .rename(...)?
+trainingData, testingData = trainingData.dropna(), testingData.dropna()
 print("Printing testing data:", testingData)
+
+# print("Printing training data:", trainingData)
+# device: Hardware used to train the model. NVIDIA / CUDA GPU training is
+#         faster (testing hardware being is an ARM Mac, so CPU is used).
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
